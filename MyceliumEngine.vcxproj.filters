@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\ecs">
+      <UniqueIdentifier>{57f6204e-c049-4ec8-ad8e-9944269be7c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\systems">
+      <UniqueIdentifier>{da9b3a03-a30a-4b77-9117-9fe4f90a6078}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\components">
+      <UniqueIdentifier>{97fed253-dc90-474c-84b1-e2249975648a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\rendering">
+      <UniqueIdentifier>{cb089fb8-1854-4cd9-9931-510dfdb75e7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\shaders">
+      <UniqueIdentifier>{65f7c77f-22f6-4a2b-ae50-0f545f44f874}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MyceliumEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementSystem.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files\rendering</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Entity.h">
+      <Filter>Source Files\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>Source Files\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="Registry.h">
+      <Filter>Source Files\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Source Files\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentManager.h">
+      <Filter>Source Files\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemManager.h">
+      <Filter>Source Files\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentArray.h">
+      <Filter>Source Files\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>Source Files\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="IComponentArray.h">
+      <Filter>Source Files\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="Components.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementSystem.h">
+      <Filter>Source Files\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeSystem.h">
+      <Filter>Source Files\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Source Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="AgingSystem.h">
+      <Filter>Source Files\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Source Files\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>Source Files\components</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
