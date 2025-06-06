@@ -39,6 +39,9 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files\rendering</Filter>
     </ClCompile>
+    <ClCompile Include="RenderSystem.cpp">
+      <Filter>Source Files\systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h">
@@ -88,6 +91,15 @@
     </ClInclude>
     <ClInclude Include="Renderable.h">
       <Filter>Source Files\components</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderSystem.h">
+      <Filter>Source Files\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="RotationSystem.h">
+      <Filter>Source Files\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="DecaySystem.h">
+      <Filter>Source Files\systems</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

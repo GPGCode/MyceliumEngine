@@ -32,7 +32,7 @@ public:
 		signature.set(componentManager.GetComponentType<T>(), true);
 		entityManager.SetSignature(entity, signature);
 
-		systemManager.EntitySignatureChanged(entity, signature);
+		systemManager.EntitySignatureChanged(entity.GetID(), signature);
 	}
 
 	template<typename T>
@@ -70,6 +70,28 @@ public:
 		systemManager.SetSignature<T>(signature);
 	}
 
+	template<typename... ComponentTypes>
+	std::vector<Entity> GetEntitiesWith()
+	{
+		Signature desiredSignature;
+		(desiredSignature.set(GetComponentType<ComponentTypes>()), ...);
+
+		std::vector<Entity> result;
+		for (Entity::IDType id = 0; id < MAX_ENTITIES; ++id)
+		{
+			Entity entity(id);
+			Signature entitySignature = entityManager.GetSignature(entity);
+			if ((entitySignature & desiredSignature) == desiredSignature) {
+				result.push_back(entity);
+			}
+		}
+		return result;
+	}
+
+	template<typename T>
+	bool HasComponent(Entity::IDType entity) {
+		return componentManager.HasComponent<T>(entity);
+	}
 
 private:
 	EntityManager entityManager;

@@ -36,7 +36,7 @@ public:
 	{
 		for (auto const& pair : systems) {
 			auto const& system = pair.second;
-			system->entities.erase(entity);
+			system->entities.erase(entity.GetID());
 		}
 	}
 

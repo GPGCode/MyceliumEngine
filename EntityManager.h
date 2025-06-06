@@ -5,7 +5,6 @@
 #include <bitset>
 #include <cassert>
 #include <array>
-
 using Signature = std::bitset<MAX_COMPONENTS>;
 
 class EntityManager {

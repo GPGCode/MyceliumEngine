@@ -1,25 +1,42 @@
-#include "Renderer.h"
+﻿#include "Renderer.h"
 #include <iostream>
-
+#include "Registry.h"
+#include "Renderable.h"
+#include "Component.h"
 float vertices[] = {
-	-0.5f, -.05f,
+	-0.5f, -.5f,
 	0.5f, -0.5f,
 	0.0f, 0.5f
 };
 
 const char* vertexShaderSource = R"(
 #version 330 core
+
 layout (location = 0) in vec2 aPos;
+
+uniform vec2 uOffset;
+uniform float uRotation;
+
 void main() {
-    gl_Position = vec4(aPos, 0.0, 1.0);
+	float s = sin(uRotation);
+	float c = cos(uRotation);
+
+	mat2 rotation = mat2(
+        c, -s,
+        s,  c
+    );
+	
+	vec2 rotatedPos = rotation * aPos;
+	gl_Position = vec4(rotatedPos + uOffset, 0.0, 1.0);
 }
 )";
 
 const char* fragmentShaderSource = R"(
 #version 330 core
+uniform vec4 uColor;
 out vec4 FragColor;
 void main() {
-    FragColor = vec4(1.0, 0.5, 0.2, 1.0); // orange
+    FragColor = uColor; // orange
 }
 )";
 
@@ -54,6 +71,9 @@ bool Renderer::Init(const std::string& title, int width, int height) {
 		return false;
 	}
 
+	// Enable blending
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK) 
 	{
@@ -67,13 +87,29 @@ bool Renderer::Init(const std::string& title, int width, int height) {
 }
 
 bool Renderer::InitShaders() {
+	GLint success;
+	char infoLog[512];
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
 	glCompileShader(vertexShader);
 
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		glGetShaderInfoLog(vertexShader, 512, nullptr, infoLog);
+		std::cerr << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+		false;
+	}
+
 	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
 	glCompileShader(fragmentShader);
+
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		glGetShaderInfoLog(fragmentShader, 512, nullptr, infoLog);
+		std::cerr << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+		false;
+	}
 
 	shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
@@ -109,9 +145,29 @@ void Renderer::Clear() {
 }
 
 void Renderer::DrawTriangle() {
+
 	glUseProgram(shaderProgram);
 	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+
+
+	GLint offsetLoc = glGetUniformLocation(shaderProgram, "uOffset");
+	GLint colorLoc = glGetUniformLocation(shaderProgram, "uColor");
+	GLint rotationLoc = glGetUniformLocation(shaderProgram, "uRotation");
+
+
+	for (auto& entity : registry->GetEntitiesWith<Renderable, Position, Rotation>())
+	{
+		auto& pos = registry->GetComponent<Position>(entity.GetID());
+		auto& color = registry->GetComponent<Color>(entity.GetID());
+		auto& rot = registry->GetComponent<Rotation>(entity.GetID());
+
+		//Add offset and colors to the Vertex/Frag shaders
+		glUniform2f(offsetLoc, pos.x, pos.y);
+		glUniform4f(colorLoc, color.r, color.g, color.b, color.a);
+		glUniform1f(rotationLoc, rot.angle);
+
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+	}
 }
 
 void Renderer::Present() {
@@ -143,4 +199,8 @@ void Renderer::CleanUp()
 
 void Renderer::ShutDown() {
 	CleanUp();
+}
+
+void Renderer::SetRegistry(std::shared_ptr<Registry> reg) {
+	registry = reg;
 }

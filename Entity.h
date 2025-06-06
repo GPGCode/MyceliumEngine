@@ -13,7 +13,7 @@ class Entity
 
 		bool operator==(const Entity& other) const { return id == other.id; }
 		bool operator!=(const Entity& other) const { return id != other.id; }
-		operator bool() const { return id != 0; }
+		bool operator<(const Entity& other) const { return id < other.id; }
 
 private:
 	IDType id;

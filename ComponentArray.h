@@ -5,16 +5,17 @@
 #include "Entity.h"
 #include "Common.h"
 #include "IComponentArray.h"
+
 template<typename T>
 class ComponentArray : public IComponentArray {
 public:
 	void InsertData(Entity entity, const T& component)
 	{
-		assert(entityToIndexMap.find(entity) == entityToIndexMap.end() && "Component already added to entity");
+		assert(entityToIndexMap.find(entity.GetID()) == entityToIndexMap.end() && "Component already added to entity");
 
 		size_t newIndex = size;
-		entityToIndexMap[entity] = newIndex;
-		indexToEntityMap[newIndex] = entity;
+		entityToIndexMap[entity.GetID()] = newIndex;
+		indexToEntityMap[newIndex] = entity.GetID();
 		componentArray[newIndex] = component;
 		++size;
 	}
@@ -51,9 +52,13 @@ public:
 		}
 	}
 
+	bool HasComponent(Entity::IDType entity) {
+		return entityToIndexMap.find(entity) != entityToIndexMap.end();
+	}
+
 private:
 	std::array<T, MAX_ENTITIES> componentArray{};
-	std::unordered_map<EntityID, size_t> entityToIndexMap{};
-	std::unordered_map<size_t, EntityID> indexToEntityMap{};
+	std::unordered_map<Entity::IDType, size_t> entityToIndexMap{};
+	std::unordered_map<size_t, Entity::IDType> indexToEntityMap{};
 	size_t size = 0;
 };

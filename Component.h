@@ -4,9 +4,17 @@ struct Position {
 	float y = 0.0f;
 };
 
-struct Velocity {
-	float dx = 0.0f;
-	float dy = 0.0f;
+struct Movement
+{
+	float speed;
+	float acceleration;
+	float directionAngle;
+	bool useFacingDirection = true;
+};
+
+struct Rotation
+{
+	float angle = 0.0f;
 };
 
 struct Progression {
@@ -21,9 +29,19 @@ struct EffectTrigger {
 };
 
 struct Age {
-	float age = 0.0;
-	float agingRate = 1.0f;
+	float age = 0.0f;
 };
+
+struct DecayState
+{
+	float level = 0.0f;
+	float rate = 0.1f;
+};
+
+struct Color {
+	float r, g, b, a;
+};
+
 
 struct EnvironmentalProperties {
 	float moisture = 0.0f;     // 0 (dry) to 1 (soaked)
